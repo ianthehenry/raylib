@@ -118,6 +118,16 @@ void DrawLineV(Vector2 startPos, Vector2 endPos, Color color)
         rlVertex2f(endPos.x, endPos.y);
     rlEnd();
 }
+// Draw a line with a color gradient
+void DrawLineGrad(Vector2 startPos, Vector2 endPos, Color startColor, Color endColor)
+{
+    rlBegin(RL_LINES);
+        rlColor4ub(startColor.r, startColor.g, startColor.b, startColor.a);
+        rlVertex2f(startPos.x, startPos.y);
+        rlColor4ub(endColor.r, endColor.g, endColor.b, endColor.a);
+        rlVertex2f(endPos.x, endPos.y);
+    rlEnd();
+}
 
 // Draw a line defining thickness
 void DrawLineEx(Vector2 startPos, Vector2 endPos, float thick, Color color)

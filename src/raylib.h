@@ -1133,6 +1133,7 @@ RLAPI void DrawPixel(int posX, int posY, Color color);                          
 RLAPI void DrawPixelV(Vector2 position, Color color);                                                    // Draw a pixel (Vector version)
 RLAPI void DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, Color color);                // Draw a line
 RLAPI void DrawLineV(Vector2 startPos, Vector2 endPos, Color color);                                     // Draw a line (Vector version)
+RLAPI void DrawLineGrad(Vector2 startPos, Vector2 endPos, Color startColor, Color endColor);             // Draw a line with gradient
 RLAPI void DrawLineEx(Vector2 startPos, Vector2 endPos, float thick, Color color);                       // Draw a line defining thickness
 RLAPI void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);                   // Draw a line using cubic-bezier curves in-out
 RLAPI void DrawLineBezierQuad(Vector2 startPos, Vector2 endPos, Vector2 controlPos, float thick, Color color); //Draw line using quadratic bezier curves with a control point
