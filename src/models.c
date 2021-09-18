@@ -180,12 +180,12 @@ void DrawCircle3D(Vector3 center, float radius, Vector3 rotationAxis, float rota
 void DrawTriangle3D(Vector3 v1, Vector3 v2, Vector3 v3, Color color)
 {
     rlCheckRenderBatchLimit(3);
-
+    Vector3 n = Vector3Normalize(Vector3CrossProduct(Vector3Subtract(v1, v2), Vector3Subtract(v1, v3)));
     rlBegin(RL_TRIANGLES);
         rlColor4ub(color.r, color.g, color.b, color.a);
-        rlVertex3f(v1.x, v1.y, v1.z);
-        rlVertex3f(v2.x, v2.y, v2.z);
-        rlVertex3f(v3.x, v3.y, v3.z);
+        rlNormal3f(n.x, n.y, n.z); rlVertex3f(v1.x, v1.y, v1.z);
+        rlNormal3f(n.x, n.y, n.z); rlVertex3f(v2.x, v2.y, v2.z);
+        rlNormal3f(n.x, n.y, n.z); rlVertex3f(v3.x, v3.y, v3.z);
     rlEnd();
 }
 
@@ -238,58 +238,58 @@ void DrawCube(Vector3 position, float width, float height, float length, Color c
             rlColor4ub(color.r, color.g, color.b, color.a);
 
             // Front face
-            rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Left
-            rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right
-            rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Left
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left
 
-            rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Right
-            rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left
-            rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Right
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right
 
             // Back face
-            rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Left
-            rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left
-            rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right
+            rlNormal3f(0.0f, 0.0f, -1.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Left
+            rlNormal3f(0.0f, 0.0f, -1.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left
+            rlNormal3f(0.0f, 0.0f, -1.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right
 
-            rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right
-            rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right
-            rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left
+            rlNormal3f(0.0f, 0.0f, -1.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right
+            rlNormal3f(0.0f, 0.0f, -1.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right
+            rlNormal3f(0.0f, 0.0f, -1.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left
 
             // Top face
-            rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left
-            rlVertex3f(x - width/2, y + height/2, z + length/2);  // Bottom Left
-            rlVertex3f(x + width/2, y + height/2, z + length/2);  // Bottom Right
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Bottom Left
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Bottom Right
 
-            rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right
-            rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left
-            rlVertex3f(x + width/2, y + height/2, z + length/2);  // Bottom Right
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Bottom Right
 
             // Bottom face
-            rlVertex3f(x - width/2, y - height/2, z - length/2);  // Top Left
-            rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right
-            rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Left
+            rlNormal3f(0.0f, -1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Top Left
+            rlNormal3f(0.0f, -1.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right
+            rlNormal3f(0.0f, -1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Left
 
-            rlVertex3f(x + width/2, y - height/2, z - length/2);  // Top Right
-            rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right
-            rlVertex3f(x - width/2, y - height/2, z - length/2);  // Top Left
+            rlNormal3f(0.0f, -1.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Top Right
+            rlNormal3f(0.0f, -1.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right
+            rlNormal3f(0.0f, -1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Top Left
 
             // Right face
-            rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right
-            rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right
-            rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Left
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Left
 
-            rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Left
-            rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right
-            rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Left
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Left
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Left
 
             // Left face
-            rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Right
-            rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left
-            rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Right
+            rlNormal3f(-1.0f, 0.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Right
+            rlNormal3f(-1.0f, 0.0f, 0.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left
+            rlNormal3f(-1.0f, 0.0f, 0.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Right
 
-            rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Left
-            rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left
-            rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Right
+            rlNormal3f(-1.0f, 0.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Left
+            rlNormal3f(-1.0f, 0.0f, 0.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left
+            rlNormal3f(-1.0f, 0.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Right
         rlEnd();
     rlPopMatrix();
 }
@@ -397,41 +397,35 @@ void DrawCubeTexture(Texture2D texture, Vector3 position, float width, float hei
         rlBegin(RL_QUADS);
             rlColor4ub(color.r, color.g, color.b, color.a);
             // Front Face
-            rlNormal3f(0.0f, 0.0f, 1.0f);                  // Normal Pointing Towards Viewer
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Left Of The Texture and Quad
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right Of The Texture and Quad
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Right Of The Texture and Quad
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left Of The Texture and Quad
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Left Of The Texture and Quad
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Right Of The Texture and Quad
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Right Of The Texture and Quad
+            rlNormal3f(0.0f, 0.0f, 1.0f); rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Left Of The Texture and Quad
             // Back Face
-            rlNormal3f(0.0f, 0.0f, - 1.0f);                  // Normal Pointing Away From Viewer
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Right Of The Texture and Quad
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Right Of The Texture and Quad
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Left Of The Texture and Quad
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Left Of The Texture and Quad
+            rlNormal3f(0.0f, 0.0f, - 1.0f); rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Right Of The Texture and Quad
+            rlNormal3f(0.0f, 0.0f, - 1.0f); rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Right Of The Texture and Quad
+            rlNormal3f(0.0f, 0.0f, - 1.0f); rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Left Of The Texture and Quad
+            rlNormal3f(0.0f, 0.0f, - 1.0f); rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Left Of The Texture and Quad
             // Top Face
-            rlNormal3f(0.0f, 1.0f, 0.0f);                  // Normal Pointing Up
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left Of The Texture and Quad
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Bottom Left Of The Texture and Quad
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Bottom Right Of The Texture and Quad
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right Of The Texture and Quad
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left Of The Texture and Quad
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Bottom Left Of The Texture and Quad
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Bottom Right Of The Texture and Quad
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right Of The Texture and Quad
             // Bottom Face
-            rlNormal3f(0.0f, - 1.0f, 0.0f);                  // Normal Pointing Down
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Top Right Of The Texture and Quad
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Top Left Of The Texture and Quad
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Left Of The Texture and Quad
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Right Of The Texture and Quad
+            rlNormal3f(0.0f, - 1.0f, 0.0f); rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Top Right Of The Texture and Quad
+            rlNormal3f(0.0f, - 1.0f, 0.0f); rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Top Left Of The Texture and Quad
+            rlNormal3f(0.0f, - 1.0f, 0.0f); rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Left Of The Texture and Quad
+            rlNormal3f(0.0f, - 1.0f, 0.0f); rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Right Of The Texture and Quad
             // Right face
-            rlNormal3f(1.0f, 0.0f, 0.0f);                  // Normal Pointing Right
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right Of The Texture and Quad
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right Of The Texture and Quad
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Left Of The Texture and Quad
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Left Of The Texture and Quad
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z - length/2);  // Bottom Right Of The Texture and Quad
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z - length/2);  // Top Right Of The Texture and Quad
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + width/2, y + height/2, z + length/2);  // Top Left Of The Texture and Quad
+            rlNormal3f(1.0f, 0.0f, 0.0f); rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + width/2, y - height/2, z + length/2);  // Bottom Left Of The Texture and Quad
             // Left Face
-            rlNormal3f( - 1.0f, 0.0f, 0.0f);                  // Normal Pointing Left
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Left Of The Texture and Quad
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Right Of The Texture and Quad
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Right Of The Texture and Quad
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left Of The Texture and Quad
+            rlNormal3f( - 1.0f, 0.0f, 0.0f); rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z - length/2);  // Bottom Left Of The Texture and Quad
+            rlNormal3f( - 1.0f, 0.0f, 0.0f); rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - width/2, y - height/2, z + length/2);  // Bottom Right Of The Texture and Quad
+            rlNormal3f( - 1.0f, 0.0f, 0.0f); rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z + length/2);  // Top Right Of The Texture and Quad
+            rlNormal3f( - 1.0f, 0.0f, 0.0f); rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - width/2, y + height/2, z - length/2);  // Top Left Of The Texture and Quad
         rlEnd();
     //rlPopMatrix();
 
@@ -635,12 +629,10 @@ void DrawPlane(Vector3 centerPos, Vector2 size, Color color)
 
         rlBegin(RL_QUADS);
             rlColor4ub(color.r, color.g, color.b, color.a);
-            rlNormal3f(0.0f, 1.0f, 0.0f);
-
-            rlVertex3f(-0.5f, 0.0f, -0.5f);
-            rlVertex3f(-0.5f, 0.0f, 0.5f);
-            rlVertex3f(0.5f, 0.0f, 0.5f);
-            rlVertex3f(0.5f, 0.0f, -0.5f);
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(-0.5f, 0.0f, -0.5f);
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(-0.5f, 0.0f, 0.5f);
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(0.5f, 0.0f, 0.5f);
+            rlNormal3f(0.0f, 1.0f, 0.0f); rlVertex3f(0.5f, 0.0f, -0.5f);
         rlEnd();
     rlPopMatrix();
 }
