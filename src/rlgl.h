@@ -391,7 +391,7 @@ typedef enum {
         BLEND_MULTIPLIED,               // Blend textures multiplying colors
         BLEND_ADD_COLORS,               // Blend textures adding colors (alternative)
         BLEND_SUBTRACT_COLORS,          // Blend textures subtracting colors (alternative)
-        BLEND_CUSTOM                    // Belnd textures using custom src/dst factors (use SetBlendModeCustom())
+        BLEND_CUSTOM                    // Blend textures using custom src/dst factors
     } BlendMode;
 
     // Shader location point type
@@ -535,6 +535,7 @@ RLAPI void rlClearScreenBuffers(void);                  // Clear used screen buf
 RLAPI void rlCheckErrors(void);                         // Check and log OpenGL error codes
 RLAPI void rlSetBlendMode(int mode);                    // Set blending mode
 RLAPI void rlSetBlendFactors(int glSrcFactor, int glDstFactor, int glEquation); // Set blending mode factor and equation (using OpenGL factors)
+RLAPI void rlSetBlendFactorsSeparate(int glSrcFactorRGB, int glSrcFactorAlpha, int glDstFactorRGB, int glDstFactorAlpha, int glEquationRGB, int glEquationAlpha); // Set blending mode factor and equation (using OpenGL factors)
 
 //------------------------------------------------------------------------------------
 // Functions Declaration - rlgl functionality
@@ -819,9 +820,12 @@ typedef struct rlglData {
         Matrix viewOffsetStereo[2];         // VR stereo rendering eyes view offset matrices
 
         int currentBlendMode;               // Blending mode active
-        int glBlendSrcFactor;               // Blending source factor
-        int glBlendDstFactor;               // Blending destination factor
-        int glBlendEquation;                // Blending equation
+        int glBlendSrcFactorRGB;            // Custom blend source factor for RGB
+        int glBlendSrcFactorAlpha;          // Custom blend source factor for Alpha
+        int glBlendDstFactorRGB;            // Custom blend destination factor for RGB
+        int glBlendDstFactorAlpha;          // Custom blend destination factor for Alpha
+        int glBlendEquationRGB;             // Custom blend equation for RGB
+        int glBlendEquationAlpha;           // Custom blend equation for Alpha
 
         int framebufferWidth;               // Default framebuffer width
         int framebufferHeight;              // Default framebuffer height
@@ -1572,7 +1576,10 @@ void rlSetBlendMode(int mode)
             case BLEND_MULTIPLIED: glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA); glBlendEquation(GL_FUNC_ADD); break;
             case BLEND_ADD_COLORS: glBlendFunc(GL_ONE, GL_ONE); glBlendEquation(GL_FUNC_ADD); break;
             case BLEND_SUBTRACT_COLORS: glBlendFunc(GL_ONE, GL_ONE); glBlendEquation(GL_FUNC_SUBTRACT); break;
-            case BLEND_CUSTOM: glBlendFunc(RLGL.State.glBlendSrcFactor, RLGL.State.glBlendDstFactor); glBlendEquation(RLGL.State.glBlendEquation); break;
+            case BLEND_CUSTOM:
+              glBlendFuncSeparate(RLGL.State.glBlendSrcFactorRGB, RLGL.State.glBlendDstFactorRGB, RLGL.State.glBlendSrcFactorAlpha, RLGL.State.glBlendDstFactorAlpha);
+              glBlendEquationSeparate(RLGL.State.glBlendEquation, RLGL.State.glBlendEquationAlpha);
+              break;
             default: break;
         }
 
@@ -1585,9 +1592,24 @@ void rlSetBlendMode(int mode)
 void rlSetBlendFactors(int glSrcFactor, int glDstFactor, int glEquation)
 {
 #if defined(GRAPHICS_API_OPENGL_33) || defined(GRAPHICS_API_OPENGL_ES2)
-    RLGL.State.glBlendSrcFactor = glSrcFactor;
-    RLGL.State.glBlendDstFactor = glDstFactor;
-    RLGL.State.glBlendEquation = glEquation;
+    RLGL.State.glBlendSrcFactorRGB = glSrcFactor;
+    RLGL.State.glBlendSrcFactorAlpha = glSrcFactor;
+    RLGL.State.glBlendDstFactorRGB = glDstFactor;
+    RLGL.State.glBlendDstFactorAlpha = glDstFactor;
+    RLGL.State.glBlendEquationRGB = glEquation;
+    RLGL.State.glBlendEquationAlpha = glEquation;
+#endif
+}
+// Set blending mode factor and equation
+void rlSetBlendFactorsSeparate(int glSrcFactorRGB, int glSrcFactorAlpha, int glDstFactorRGB, int glDstFactorAlpha, int glEquationRGB, int glEquationAlpha)
+{
+#if defined(GRAPHICS_API_OPENGL_33) || defined(GRAPHICS_API_OPENGL_ES2)
+    RLGL.State.glBlendSrcFactorRGB = glSrcFactorRGB;
+    RLGL.State.glBlendSrcFactorAlpha = glSrcFactorAlpha;
+    RLGL.State.glBlendDstFactorRGB = glDstFactorRGB;
+    RLGL.State.glBlendDstFactorAlpha = glDstFactorAlpha;
+    RLGL.State.glBlendEquationRGB = glEquationRGB;
+    RLGL.State.glBlendEquationAlpha = glEquationAlpha;
 #endif
 }
 
