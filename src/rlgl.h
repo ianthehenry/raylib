@@ -1613,6 +1613,11 @@ void rlSetBlendFactorsSeparate(int glSrcFactorRGB, int glSrcFactorAlpha, int glD
 #endif
 }
 
+void rlSetReverseWinding(bool reverseWinding)
+{
+    glFrontFace(reverseWinding ? GL_CW : GL_CCW);
+}
+
 //----------------------------------------------------------------------------------
 // Module Functions Definition - rlgl functionality
 //----------------------------------------------------------------------------------
