@@ -2212,6 +2212,7 @@ Shader LoadShader(const char *vsFileName, const char *fsFileName)
         shader.locs[SHADER_LOC_MATRIX_VIEW] = rlGetLocationUniform(shader.id, "view");
         shader.locs[SHADER_LOC_MATRIX_PROJECTION] = rlGetLocationUniform(shader.id, "projection");
         shader.locs[SHADER_LOC_MATRIX_NORMAL] = rlGetLocationUniform(shader.id, "matNormal");
+        shader.locs[SHADER_LOC_MATRIX_MODEL] = rlGetLocationUniform(shader.id, "matModel");
 
         // Get handles to GLSL uniform locations (fragment shader)
         shader.locs[SHADER_LOC_COLOR_DIFFUSE] = rlGetLocationUniform(shader.id, "colDiffuse");

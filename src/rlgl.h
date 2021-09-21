@@ -2251,6 +2251,7 @@ void rlDrawRenderBatch(RenderBatch *batch)
             // Create modelview-projection matrix and upload to shader
             Matrix matMVP = MatrixMultiply(RLGL.State.modelview, RLGL.State.projection);
             glUniformMatrix4fv(RLGL.State.currentShader.locs[SHADER_LOC_MATRIX_MVP], 1, false, MatrixToFloat(matMVP));
+            glUniformMatrix4fv(RLGL.State.currentShader.locs[SHADER_LOC_MATRIX_MODEL], 1, false, MatrixToFloat(MatrixIdentity()));
 
             if (RLGL.ExtSupported.vao) glBindVertexArray(batch->vertexBuffer[batch->currentBuffer].vaoId);
             else
@@ -3768,12 +3769,14 @@ static void rlLoadShaderDefault(void)
     "out vec4 fragColor;                \n"
 #endif
     "uniform mat4 mvp;                  \n"
+    "uniform mat4 matModel;             \n"
     "void main()                        \n"
     "{                                  \n"
     "    fragTexCoord = vertexTexCoord; \n"
     "    fragColor = vertexColor;       \n"
     "    gl_Position = mvp*vec4(vertexPosition, 1.0); \n"
-    "    vec3 ignored = vertexNormal;   \n"
+    "    vec3 ignore_normal = vertexNormal; \n"
+    "    mat4 ignore_model = matModel;  \n"
     "}                                  \n";
 
     // Fragment shader directly defined, no external file required
@@ -3826,7 +3829,8 @@ static void rlLoadShaderDefault(void)
         RLGL.State.defaultShader.locs[SHADER_LOC_VERTEX_NORMAL] = glGetAttribLocation(RLGL.State.defaultShader.id, "vertexNormal");
 
         // Set default shader locations: uniform locations
-        RLGL.State.defaultShader.locs[SHADER_LOC_MATRIX_MVP]  = glGetUniformLocation(RLGL.State.defaultShader.id, "mvp");
+        RLGL.State.defaultShader.locs[SHADER_LOC_MATRIX_MVP] = glGetUniformLocation(RLGL.State.defaultShader.id, "mvp");
+        RLGL.State.defaultShader.locs[SHADER_LOC_MATRIX_MODEL] = glGetUniformLocation(RLGL.State.defaultShader.id, "matModel");
         RLGL.State.defaultShader.locs[SHADER_LOC_COLOR_DIFFUSE] = glGetUniformLocation(RLGL.State.defaultShader.id, "colDiffuse");
         RLGL.State.defaultShader.locs[SHADER_LOC_MAP_DIFFUSE] = glGetUniformLocation(RLGL.State.defaultShader.id, "texture0");
     }
