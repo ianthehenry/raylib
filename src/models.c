@@ -1886,9 +1886,6 @@ par_shapes_mesh* par_shapes_create_icosahedron();       // 20 sides polyhedron
     par_shapes_free_mesh(cube);
 #endif
 
-    // Upload vertex data to GPU (static mesh)
-    UploadMesh(&mesh, false);
-
     return mesh;
 }
 
