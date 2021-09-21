@@ -1395,6 +1395,7 @@ RLAPI Material *LoadMaterials(const char *fileName, int *materialCount);        
 RLAPI Material LoadMaterialDefault(void);                                                   // Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
 RLAPI void UnloadMaterial(Material material);                                               // Unload material from GPU memory (VRAM)
 RLAPI void SetMaterialTexture(Material *material, int mapType, Texture2D texture);          // Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...)
+RLAPI void SetMaterialShader(Material *material, Shader shader);                            // Set shader for a material
 RLAPI void SetModelMeshMaterial(Model *model, int meshId, int materialId);                  // Set material for a mesh
 
 // Model animations loading/unloading functions

@@ -1375,6 +1375,11 @@ void SetMaterialTexture(Material *material, int mapType, Texture2D texture)
     material->maps[mapType].texture = texture;
 }
 
+void SetMaterialShader(Material *material, Shader shader)
+{
+    material->shader = shader;
+}
+
 // Set the material for a mesh
 void SetModelMeshMaterial(Model *model, int meshId, int materialId)
 {
