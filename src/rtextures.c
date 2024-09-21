@@ -3717,9 +3717,7 @@ TextureCubemap LoadTextureCubemap(Image image, int layout)
     return cubemap;
 }
 
-// Load texture for rendering (framebuffer)
-// NOTE: Render texture is loaded by default with RGBA color attachment and depth RenderBuffer
-RenderTexture2D LoadRenderTexture(int width, int height)
+RenderTexture2D LoadRenderTextureCustom(int width, int height, PixelFormat format)
 {
     RenderTexture2D target = { 0 };
 
@@ -3730,10 +3728,10 @@ RenderTexture2D LoadRenderTexture(int width, int height)
         rlEnableFramebuffer(target.id);
 
         // Create color texture (default to RGBA)
-        target.texture.id = rlLoadTexture(NULL, width, height, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 1);
+        target.texture.id = rlLoadTexture(NULL, width, height, format, 1);
         target.texture.width = width;
         target.texture.height = height;
-        target.texture.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8;
+        target.texture.format = format;
         target.texture.mipmaps = 1;
 
         // Create depth renderbuffer/texture
@@ -3755,6 +3753,13 @@ RenderTexture2D LoadRenderTexture(int width, int height)
     else TRACELOG(LOG_WARNING, "FBO: Framebuffer object can not be created");
 
     return target;
+}
+
+// Load texture for rendering (framebuffer)
+// NOTE: Render texture is loaded by default with RGBA color attachment and depth RenderBuffer
+RenderTexture2D LoadRenderTexture(int width, int height)
+{
+    return LoadRenderTextureCustom(width, height, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
 }
 
 // Check if a texture is ready
