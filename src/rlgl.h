@@ -676,6 +676,7 @@ RLAPI void rlUnloadRenderBatch(rlRenderBatch batch);                        // U
 RLAPI void rlDrawRenderBatch(rlRenderBatch *batch);                         // Draw render batch data (Update->Draw->Reset)
 RLAPI void rlSetRenderBatchActive(rlRenderBatch *batch);                    // Set the active render batch for rlgl (NULL for default internal)
 RLAPI void rlDrawRenderBatchActive(void);                                   // Update and draw internal render batch
+RLAPI void rlFinish(void);                                                  // Actually issue OpenGL call
 RLAPI bool rlCheckRenderBatchLimit(int vCount);                             // Check internal buffer overflow for a given number of vertex
 
 RLAPI void rlSetTexture(unsigned int id);               // Set current texture for render batch and check buffers limits
@@ -2935,6 +2936,12 @@ void rlDrawRenderBatchActive(void)
 #if defined(GRAPHICS_API_OPENGL_33) || defined(GRAPHICS_API_OPENGL_ES2)
     rlDrawRenderBatch(RLGL.currentBatch);    // NOTE: Stereo rendering is checked inside
 #endif
+}
+
+// Update and draw internal render batch
+void rlFinish(void)
+{
+    glFinish();
 }
 
 // Check internal buffer overflow for a given number of vertex
